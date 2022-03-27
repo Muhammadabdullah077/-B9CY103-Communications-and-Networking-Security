@@ -2,7 +2,7 @@
 {% block body %}
 <nav class="bg-primary">
     <div class="nav-wrapper container">
-      <p  class="brand-logo">testing for college app</p>
+      <p  class="brand-logo">DBS Students Chatting App</p>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li class="text-capitalize"><a href="">{{ request.user.username }}</a></li>
           <li class="text-capitalize"><a href="{% url 'logout' %}"><i class="material-icons">power_settings_new</i></a></li>
@@ -23,7 +23,15 @@
                             <span class="title text-capitalize" style="font-weight: bolder">{{ user.username }}</span>
 
                     </div>
-                
+                </a>
+                    {% endfor %}
+                {% else %}
+                        <p class="p-1 text-danger border-bottom">Please Verify your Email First.</p>
+                        <form action="" method="POST" class="text-center py-2">
+                                {% csrf_token %}
+                                <input name="code" id="code" placeholder="Enter Email Code">
+                                <input type="submit" class="btn btn-primary" value="Verify"><hr>
+                                <a href="{% url 'send_email'%}">Resend Code</a>
                         </form>
                 {% endif %}
             </div>
@@ -57,4 +65,19 @@
     {% load staticfiles %}
     <script src="{% static 'js/chat.js' %}"></script>
     <script>
-        
+        // For receiving
+        sender_id = "{{ receiver.id }}";
+        receiver_id = "{{ request.user.id }}";
+
+        //For sending
+        $(function () {
+            scrolltoend();
+            $('#chat-box').on('submit', function (event) {
+                event.preventDefault();
+                var message = $('#id_message');
+                send('{{ request.user.username }}', '{{ receiver.username }}', message.val());
+                message.val('');
+            })
+        })
+    </script>
+{% endblock %}
