@@ -10,7 +10,20 @@
                     {{ form.username }}
                     <label for="id_username" data-error="Username already taken">Email</label>
                 </div>
-           
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.password1 }}
+                    <label for="id_password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.password2 }}
+                    <label for="id_password2">Repeat Password</label>
+                </div>
+            </div>
+            <div class="row">
                 <div>
                     {% if errors %}
                           {{ errors }}
