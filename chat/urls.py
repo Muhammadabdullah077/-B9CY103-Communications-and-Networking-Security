@@ -10,4 +10,7 @@ rlpatterns = [
     path('api/messages/<int:sender>/<int:receiver>/', views.message_list, name='message-detail'),
     path('api/messages/', views.message_list, name='message-list'),
     path('logout/', logout, {'next_page': 'index'}, name='logout'),
+    path('register/', sender.register_view, name='register'),
+    path('send_email/', sender.send_email, name='send_email'),
+     
 ]    
