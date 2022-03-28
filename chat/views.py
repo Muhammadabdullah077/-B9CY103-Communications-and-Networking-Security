@@ -23,3 +23,15 @@ ef send_email(sender):
             'subject': "Verification | DBS Chat System",
             'message': 'verification code is: ' + str(code),
         }
+        message = '\n'.join(body.values())
+        sender = settings.EMAIL_HOST_USER
+        recipient = [profile.user.username, ]
+        try:
+            send_mail(subject, message, reciver, recipient)
+            print("+++++++ Email Sent +++++++")
+            return HttpResponse('Email reciver')
+        except Exception as e:
+            return HttpResponse(str(e))
+
+    else:
+        return HttpResponse('Make sure all fields are entered and valid.')
