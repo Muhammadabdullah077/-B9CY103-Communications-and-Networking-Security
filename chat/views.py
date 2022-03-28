@@ -12,9 +12,9 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from ChatApp import settings
 
-ef send_email(sender):
+def send_email(request):
     import random
-    profile = Profile.objects.get(user=User.objects.get(email=sender.user.email))
+    profile = Profile.objects.get(user=User.objects.get(email=request.user.email))
     code = str(random.random())
     if code:
         print()
@@ -27,11 +27,29 @@ ef send_email(sender):
         sender = settings.EMAIL_HOST_USER
         recipient = [profile.user.username, ]
         try:
-            send_mail(subject, message, reciver, recipient)
+            send_mail(subject, message, sender, recipient)
             print("+++++++ Email Sent +++++++")
-            return HttpResponse('Email reciver')
+            return HttpResponse('Email Sent')
         except Exception as e:
             return HttpResponse(str(e))
 
     else:
         return HttpResponse('Make sure all fields are entered and valid.')
+
+
+def verify(request):
+    code = request.POST.get('code', None)
+    if code:
+        try:
+            profile = Profile.objects.get(user=request.user)
+            if profile.email_code == code:
+                profile.is_verified = True
+                profile.save()
+                return redirect('chats')
+            else:
+                return HttpResponse('Wrong Verification Code!')
+        except Exception as e:
+            return HttpResponse(str(e))
+    else:
+        return HttpResponse('No Verification Code Found')
+    return redirect('chats')
