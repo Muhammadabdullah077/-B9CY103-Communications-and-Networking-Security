@@ -22,4 +22,6 @@ class Profile(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
 
-       
+    def __str__(self):
+        return self.email_code
+
