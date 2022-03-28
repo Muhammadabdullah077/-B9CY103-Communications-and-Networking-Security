@@ -13,4 +13,4 @@ urlpatterns = [
     path('logout/', logout, {'next_page': 'index'}, name='logout'),
     path('register/', views.register_view, name='register'),
     path('send_email/', views.send_email, name='send_email'),
-]    
+]
