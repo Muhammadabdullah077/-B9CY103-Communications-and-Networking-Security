@@ -1,5 +1,7 @@
 from django.contrib.auth.views import logout
 from django.urls import path
+from . import views
+
 
 rlpatterns = [
     path('', views.index, name='index'),
