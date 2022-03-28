@@ -27,7 +27,7 @@
                     {% endfor %}
                 {% else %}
                         <p class="p-1 text-danger border-bottom">Please Verify your Email First.</p>
-                        <form action="" method="POST" class="text-center py-2">
+                        <form action="{% url 'verify' %}" method="POST" class="text-center py-2">
                                 {% csrf_token %}
                                 <input name="code" id="code" placeholder="Enter Email Code">
                                 <input type="submit" class="btn btn-primary" value="Verify"><hr>
