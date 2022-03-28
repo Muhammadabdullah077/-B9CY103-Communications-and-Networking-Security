@@ -15,9 +15,7 @@ class Message(models.Model):
     class Meta:
         ordering = ('timestamp',)
 
-
-
- class Profile(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email_code = models.CharField(max_length=100)
     timestamp = models.DateTimeField(auto_now_add=True)
