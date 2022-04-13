@@ -8,6 +8,65 @@ Project Introduction:
 			DBS chatting app is created to make a secure and table chatting web with 
 Responsive UI. To implement the security of users we are using different algorithms to store passwords and with 2-factor authentication for users. We have commented on the code as well to make sure anybody else can understand it easily, to add a level of clean UI (user interface) or a solid app structure-function over a secure broadcast network we are using Bootstrap5 the latest version of bootstrap, which is an effort for a more modern approach to internet security on a communication medium. The Implementation of DBS is based on a new but effective set-up of Python Django, JavaScript, Bootstrap, and SQLite where Bootstrap is for the app structure and UI (user interface) tool, Python for the server setup, Django for better backend and to provide new technologies-based security to the App. 
 
+Project description
+PyMulticrypt
+Python Module for secure End-2-End encryption using the Multicrypt algorithm made by me.
+
+Concept behind MultiCrypt Algrorithm
+So, take a number, say 77 as your message. Then, take another number, say 739 as your key (In actual, this number will be of 256 bits). Now, to get your encrypted message, just add your key to the actual message i.e. 77 + 739 in this case = 816. So your encrypted message is now 816.
+
+Now, encrypt your key i.e. 739 in this case using RSA Encryption (Asymmetric Encryption) i.e. encrypt your key with the public key of the recipient, then append the encrypted key at the end of your encrypted message with any seperator charecter between the encrypted message and the encrypted key.
+
+Now this message is your final encrypyed message which can be transmitted safely to the recipient.
+
+Now when the recipient receives your encrypted message, then for decrypting that message first the recipient will seperate the actual encrypted message and the encrypted key from the seperator charecter which you used between the actual encrypted message and encrypted key at the time of encrypting the message (In actual, the seperator charecter is fixed for everyone and is equal to "K"). Then the recipient will decrypt the encrypted key using his/her private key which is mathematically linked to his/her public key.
+
+Then the recipient gets the actual key i.e. 739 in this case. Then all he/she has to do is minus the actual key from the actual encrypted message to get the actual message i.e. 816 - 739 in this case = 77 which is the actual message which you wanted to send to the recipient.
+
+This is highly secure as the encrypted message is safe from brute force attack. Also, no one can reverse engineer the encryption algorithm to decrypt the message as the key required to do so is encrypted asymmetrically (i.e. using RSA encryption algorithm) and everyone knows that RSA Encryption cannot be broken due to its public-private key pair system.
+
+Hence, MultiCrypt encrypiton is a hybrid encryption algorithm (i.e. involves both symmetric encryption algorithm (key encryption) and asymmetric encryption (RSA encryption)) which is ideal for transmitting any kind of data securely using any kind of network protocol.
+
+Please do note that I am using a cutom RSA Encryption algorithm made by me for suiting the symmetric part of the MultiCrypt algorithm. Hence, public and private keys of standard RSA Encryption System WILL NOT WORK in MultiCrypt Encryption System and vice versa.
+
+Installation
+Simply using PyPi:
+
+pip install pymulticrypt
+Usage
+from pymulticrypt import End2End
+
+e2e = End2End(Parameters)
+Parameters
+public_key (Optional): Public Key to be used if you want to use existing key (Default: "").
+private_key (Optional): Private Key to be used if you want to use existing key (Default: "").
+save (Optional): Should be True/False. Specifies whether the keys have to be stored in a file or not (Default: True).
+key_path (Optional): Specifies the path and name of the file where the keys have to be stored, if save = True (Default: Same as your python file).
+new (Optional): Should be True/False. Specifies whether it should ignore any existing key pairs and generate new key pair or not (Default: False).
+Methods
+keys()
+keys = e2e.keys()
+Returns Private Key and Public Key in the form of dictionary of the format {"public": %YOUR_PUBLIC_KEY%, "private": %YOUR_PRIVATE_KEY%}.
+
+encrypt()
+encrypted_message = e2e.encrypt(message, public_key)
+Encrypts the message using MULTICRYPT algorithm.
+
+Parameters
+
+message (Required): Message to encrypt.
+public_key (Required): Public Key of the recipient of the message (for the asymmetric encryption part).
+decrypt()
+actual_message = e2e.decrypt(message, private_key)
+Decrypts the encrypted message using MULTICRYPT algorithm.
+
+Parameters
+
+message (Required): Encrypted Message to decryt.
+private_key (Optional): Your Private Key required to decrypt any message which is encrypted with Public Key linked to that private key (Default: Key which was either passed in the End2End() constrctor or generated by the program for you).
+Useful for transmitting data securely between 2 devices on a network
+
+
 Aims and Objectives:
  			Just like other social apps, you have a list of conversations with all users, that you’re engaged in. our objective is to make it more secure, and we have tried our best to make it better and secure by adding Email Verification, user Authentication, user Authorizations (as Django handles it in a very good manner) and Password’s security. we are using SHA256 hash to secure our password that is stored in our database.
 
